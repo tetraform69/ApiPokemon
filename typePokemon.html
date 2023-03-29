@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/typepokemon.css">
+    <title id="titulo">Document</title>
+</head>
+
+<body>
+    <h1 id="tipoPokemon">
+    </h1>
+
+    <div id="Pokemons">
+    </div>
+</body>
+
+<script>
+    let url = localStorage.getItem("url")
+
+    function getPokemons(url) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("tipoPokemon").innerHTML = `Pokemones tipo ${data.name}`
+                document.getElementById("titulo").innerHTML = `Pokemones tipo ${data.name}`
+                data.pokemon.forEach(p => {
+                    addPokemon(p.pokemon.url)
+                })
+            })
+    }
+
+    function addPokemon(url) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+
+                document.getElementById("Pokemons").innerHTML += `<div class="pokemon-container">
+                <a href="pokemon.html" onclick="urlLocal('${url}')" class="pokemon">
+                    <img src="${data.sprites.other["official-artwork"].front_default}" alt="${data.name}">
+                    <div>
+                        <h2>Nombre: ${data.name}</h2>
+                        <p>Altura: ${(data.height * 0.1).toFixed(1)} Mts</p>
+                        <p>Peso: ${(data.weight * 0.1).toFixed(1)} Kg</p>
+                    </div>
+                </a>
+            </div>`
+            })
+    }
+
+    function urlLocal(url) {
+        localStorage.setItem("urlPokemon", url)
+    }
+
+    getPokemons(url)
+</script>
+
+</html>

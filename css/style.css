@@ -1,0 +1,35 @@
+body{
+    background: #3b3b3b;
+}
+
+.silla-barata{
+    height: 300px;
+    width: auto;
+    background: white;
+    background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url(/images/silla-barata.jpg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.silla-cara{
+    height: 300px;
+    width: auto;
+    background: cornsilk;
+    background-image: url(/images/Untitled-design-1.jpg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.tarjetas-credito{
+    height: 150px;
+}
+
+.muebles{
+    width: 100%;
+}
+
+.icon{
+    height: 100px;
+}
