@@ -12,10 +12,65 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" />
     <link rel="stylesheet" href="/css/pokemon.css">
     <title>Document</title>
+    <script src="/js/comun.js" defer></script>
 </head>
 
 <body id="body">
-    <div id="pokemon" class="pokemon">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark fixed-top" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/indexPokemon.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                        name="search" id="search" onkeyup="autoComplete()" onclick="autoComplete()">
+                    <div id="list-pokemon"></div>
+                    <button class="btn btn-success h-50" type="button" id="cardPokemon" ondrop="drop(event)"
+                        ondragover="allowDrop(event)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                        aria-controls="offcanvasRight"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div id="pokemon">
+    </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="offcanvas-body">
+            
+        </div>
     </div>
 </body>
 
@@ -29,13 +84,15 @@
             .then(data => {
                 console.log(data)
                 document.getElementById("pokemon").innerHTML += `
-                <h1 class="name">${data.name.toUpperCase()}</h1>
-                <img id="image" src="${data.sprites.other["official-artwork"].front_default}" alt="${data.name}">
-                <div class="types">${types(data.types)}</div>
-                <div class="stats"><p>Altura: ${(data.height * 0.1).toFixed(1)} Mts</p>
+                <div class="pokemon" draggable="true" ondragstart="drag(event)" id="card${data.name}">
+                    <h1 class="name">${data.name.toUpperCase()}</h1>
+                    <img id="img${data.name}" src="${data.sprites.other["official-artwork"].front_default}" alt="${data.name}">
+                    <div class="types">${types(data.types)}</div>
+                    <div class="stats"><p>Altura: ${(data.height * 0.1).toFixed(1)} Mts</p>
                     <p>Peso: ${(data.weight * 0.1).toFixed(1)} Kg</p>
                     ${stats(data.stats)}</div>
-                <div class="skills">${skills(data.abilities)}</div>`
+                    <div class="skills">${skills(data.abilities)}</div>
+                </div>`
             })
     }
 

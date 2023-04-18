@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" />
     <link rel="stylesheet" href="/css/style2.css">
+    <script src="/js/comun.js" defer></script>
 </head>
 
 <body onload="typePokemon()">
@@ -55,13 +56,14 @@
                             name="search" id="search" onkeyup="autoComplete()" onclick="autoComplete()">
                         <div id="list-pokemon"></div>
                         <button class="btn btn-success h-50" type="button" id="cardPokemon" ondrop="drop(event)"
-                            ondragover="allowDrop(event)"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
+                            ondragover="allowDrop(event)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                            aria-controls="offcanvasRight"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
                     </form>
                 </div>
             </div>
         </nav>
 
-        <div class="row" style="height: 300px; padding-top: 50px;">
+        <div class="row" style="height: 300px; padding-top: 56px;">
             <div class="col-8 bg-info">
                 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
@@ -200,8 +202,8 @@
             <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
-            ...
+        <div class="offcanvas-body" id="offcanvas-body">
+            
         </div>
     </div>
     <div id="cardPokemon" class="card mb-3" style="max-width: 540px;" draggable="true" ondragstart="drag(event)">
@@ -221,31 +223,6 @@
     </div>
 </body>
 <script>
-
-    //drag and drop
-
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
-
-    function drag(ev) {
-        let namePokemon
-        switch (ev.target.nodeName) {
-            case "DIV":
-                namePokemon = ev.target.id.slice(4).toLowerCase()
-                break
-            case "IMG":
-                namePokemon = ev.target.id.slice(3).toLowerCase()
-                break
-        }
-        ev.dataTransfer.setData("name", namePokemon);
-    }
-
-    function drop(ev) {
-        ev.preventDefault();
-        
-        var data = ev.dataTransfer.getData("name");
-    }
 
     const frutas = []
     const categoria = []
@@ -345,6 +322,7 @@
                     list += '</div>'
                     document.getElementById("list-pokemon").innerHTML = list
                 } else {
+                    document.getElementById("list-pokemon").innerHTML = ''
                     document.getElementById("list-pokemon").classList.add('hide')
                 }
             })
